@@ -1,0 +1,49 @@
+timeout: "3600s"
+
+steps:
+  # SETUP
+  - id: services-start
+    name: 'docker/compose:1.24.1'
+    args: ['up', '-d']
+  - id: mod-download
+    name: golang
+    env: ['GO111MODULE=on', 'CGO_ENABLED=0', 'GOPATH=/workspace/go']
+    args: ['mod download']
+
+  # MONGODB
+  - id: mongodb-echo-build
+    name: golang
+    dir: mongodb-echo/
+    args: ['build']
+    env: ['GO111MODULE=on', 'CGO_ENABLED=0', 'GOPATH=/workspace/go']
+    waitFor: ['mod-download', 'services-start']
+  - id: mongodb-echo-docker
+    name: gcr.io/cloud-builders/docker
+    dir: mongodb-echo/
+    args: ['build', '-t', 'mongodb-echo', '.']
+    env: ['GO111MODULE=on', 'CGO_ENABLED=0', 'GOPATH=/workspace/go']
+    waitFor: ['mongodb-echo-build']
+  - id: mongodb-echo-run
+    name: gcr.io/cloud-builders/docker
+    args: ['run', 'mongodb-echo']
+    env: ['GO111MODULE=on', 'CGO_ENABLED=0', 'GOPATH=/workspace/go']
+    waitFor: ['services-start', 'mongodb-echo-docker']
+
+  # REDIS
+  - id: redis-echo-build
+    name: golang
+    dir: redis-echo/
+    args: ['build']
+    env: ['GO111MODULE=on', 'CGO_ENABLED=0', 'GOPATH=/workspace/go']
+    waitFor: ['mod-download']
+  - id: redis-echo-docker
+    name: gcr.io/cloud-builders/docker
+    dir: redis-echo/
+    args: ['build', '-t', 'redis-echo', '.']
+    env: ['GO111MODULE=on', 'CGO_ENABLED=0', 'GOPATH=/workspace/go']
+    waitFor: ['redis-echo-build']
+  - id: redis-echo-run
+    name: gcr.io/cloud-builders/docker
+    args: ['run', 'redis-echo']
+    env: ['GO111MODULE=on', 'CGO_ENABLED=0', 'GOPATH=/workspace/go']
+    waitFor: ['services-start', 'redis-echo-docker']

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  mongodb:
+    image: mongodb:3.4
+    name: mongodb
+    ports:
+      - 27017:27017
+    network_mode: cloudbuild
+
+  redis:
+    image: redis:3.2
+    name: redis
+    ports:
+      - 6379:6379
+    network_mode: cloudbuild
