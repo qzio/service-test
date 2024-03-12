@@ -1,16 +1,21 @@
 module service-test
 
-go 1.13
+go 1.24.2
 
 require (
 	github.com/go-redis/redis/v7 v7.4.1
-	github.com/go-stack/stack v1.8.1 // indirect
-	github.com/golang/snappy v0.0.4 // indirect
-	github.com/klauspost/compress v1.15.5 // indirect
-	github.com/xdg-go/scram v1.1.1 // indirect
-	github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a // indirect
-	go.mongodb.org/mongo-driver v1.9.1
-	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
-	golang.org/x/sync v0.0.0-20220513210516-0976fa681c29 // indirect
-	gopkg.in/yaml.v2 v2.2.8 // indirect
+	go.mongodb.org/mongo-driver v1.17.3
+)
+
+require (
+	github.com/golang/snappy v1.0.0 // indirect
+	github.com/klauspost/compress v1.18.0 // indirect
+	github.com/montanaflynn/stats v0.7.1 // indirect
+	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
+	github.com/xdg-go/scram v1.1.2 // indirect
+	github.com/xdg-go/stringprep v1.0.4 // indirect
+	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
+	golang.org/x/crypto v0.37.0 // indirect
+	golang.org/x/sync v0.13.0 // indirect
+	golang.org/x/text v0.24.0 // indirect
 )
